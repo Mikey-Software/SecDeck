@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Models/Entities
+model Player {
+  id            Int             @id @default(autoincrement())
+  username      String          @unique
+  emailAddress  String?         @unique
+  password      String          @db.VarChar(255)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  // Relationships
+  // matches       Match[]
+  // position      Leaderboard?
+}
+
+// model Match {
+//   id            Int             @id @default(autoincrement())
+//   username      String          @unique
+//   emailAddress  String          @unique
+//   createdAt     DateTime        @default(now())
+//   updatedAt     DateTime        @updatedAt
+//   newbie        Boolean         @default(false)
+//   // Relationships
+//   User          Player?           @relation(fields: [userId], references: [id])
+//   userId        Int?
+// }
+
+// model Leaderboard {
+//   player          Player            @relation(fields: [playerID], references: [id])
+//   playerID        Int             @id @unique
+// }
+
+// Enumerations
+enum Role {
+  PLAYER
+  ADMIN
+}
